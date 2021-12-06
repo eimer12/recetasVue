@@ -5,16 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    SaludoFav: ''
+    listaFav:Array
   },
 
   mutations: {
-    addSaludo(state){      
-      alert(state.SaludoFav)
-    }
+    getLS (state){
+      state.listaFav = JSON.parse(localStorage.getItem('idrecetas')) || [];
+    },
+    
   },
 
-  actions: {    
+  actions: {
   },
 
   modules: {

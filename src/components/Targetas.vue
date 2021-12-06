@@ -11,7 +11,7 @@
                 <h4>{{ receta[index].strMeal }} </h4>
                 <button 
                     class="fav-btn"
-                    @click="addSaludo"
+                    @click="ActualizaLS()"
                     >
                     <i class="fas fa-heart"></i>
                 </button>
@@ -23,13 +23,14 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
     name: 'Targetas',
     
     data() {
         return {
+            lista: []
         };
     },
 
@@ -37,14 +38,30 @@ export default {
         receta: Array,
     },
 
-    computed:{
-        ...mapState(['SaludoFav']),
+    methods:{        
+        ...mapMutations(['getLs']),
 
+        ActualizaLS (){
+            console.log();
+            // const idrecetas = $store.mutations.getLS();
+            // idrecetas.push(recetaid);
+            // const todosJ = JSON.stringify(idrecetas)
+            // localStorage.setItem('idrecetas', todosJ)
+
+        },
+
+        // borrarLS (recetaid){
+        //     let LS = $store.mutations.getLS();
+        //     localStorage.setItem("idrecetas", JSON.stringify(LS.filter((id) => id !== recetaid)));
+        // },
+
+        
     },
 
-    methods:{
-        ...mapMutations(['addSaludo']),
-    }
+    computed:{        
+        
+    },
+
 }
 </script>
 
