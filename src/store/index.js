@@ -5,11 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    SaludoFav: ''
   },
+
   mutations: {
+    addSaludo(state){      
+      alert(state.SaludoFav)
+    }
   },
-  actions: {
+
+  actions: {    
   },
+
   modules: {
   }
 })

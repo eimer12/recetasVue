@@ -1,7 +1,7 @@
 <template>
     <div>
         <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
-        <button @click="getBusquedaReceta(busqueda)">Buscar</button>
+        <button @click="getBusquedaReceta(busqueda)">Buscar</button>        
         <targetas :receta="receta" ></targetas>
     </div>
 </template>
@@ -21,10 +21,7 @@ export default {
         };
     },
 
-    methods:{
-        alerta(){
-            alert('Si hizo algo ja ja')
-        },
+    methods:{        
 
         async getRandomReceta(){
                 let resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");

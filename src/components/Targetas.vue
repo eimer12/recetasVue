@@ -1,15 +1,17 @@
 <template>
     <div class="recetas">
 
-        <div class="card-recetas" v-for="(item, index) of receta" :key="index" >            
+        <div class="card-recetas" v-for="(item, index) of receta" :key="index" >
             
+            <input type="text" v-model="$store.state.SaludoFav" >
             <div class="img-receta">
-                <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">                
+                <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
             </div>
             <div class="pie-receta">
                 <h4>{{ receta[index].strMeal }} </h4>
                 <button 
                     class="fav-btn"
+                    @click="addSaludo"
                     >
                     <i class="fas fa-heart"></i>
                 </button>
@@ -21,13 +23,28 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
     name: 'Targetas',
+    
+    data() {
+        return {
+        };
+    },
 
     props:{
         receta: Array,
     },
 
+    computed:{
+        ...mapState(['SaludoFav']),
+
+    },
+
+    methods:{
+        ...mapMutations(['addSaludo']),
+    }
 }
 </script>
 
