@@ -1,9 +1,12 @@
 <template>
     <div>
-        <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
-        <button @click="getBusquedaReceta(busqueda)">Buscar</button>        
+        <div class="header">
+            <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
+            <button @click="getBusquedaReceta(busqueda)"><i class="fas fa-search" /></button>
+        </div>
+        <!-- <button @click="pruebas" >jeje</button> -->
         <listaFav :receta="this.$store.state.recetasFavStore"></listaFav>
-        <targetas :receta="receta" ></targetas>
+        <targetas :receta="receta" @ListaFavorita="listafavo=$event" ></targetas>        
     </div>
 </template>
 
@@ -21,21 +24,24 @@ export default {
     name: 'Lista',
 
     data() {
-        return {
-            lista: this.$store.state.listaFavStore,
-            recetafav: this.$store.state.recetasFavStore,
+        return {            
+            listafavo: Array,
             receta: [],
             busqueda: '',
         };
     },
 
-    methods:{        
+    methods:{       
+        
+        pruebas(){
+            console.log(this.listafavo);
+        },
 
         async getRandomReceta(){
                 let resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
                 let respData = await resp.json();
-                let randomReceta = respData.meals[0];  
-                return randomReceta                            
+                let randomReceta = respData.meals[0];                
+                return randomReceta
         },
 
         async getBusquedaReceta(busqueda){
@@ -60,13 +66,24 @@ export default {
             return receta;
         },
 
+        async recorrelsrecetas(){
+            let ListaMeals = []
+            for (let i = 0; i < this.$store.state.listaFavStore.length; i++) {
+                ListaMeals.push( await this.getRecetabyId(this.$store.state.listaFavStore[i]) )
+            }
+                this.$store.dispatch('llenarRecetas', ListaMeals);
+        },
+
         ...mapState(['recetasFavStore']),
 
     },
 
     watch:{
-        lista:function(){
-            alert('hello')
+        listafavo:function(){
+            if (this.listafavo !== undefined ) {
+                console.log(this.$store.state.recetasFavStore);
+                this.recorrelsrecetas()
+            }
         }
     },
 
@@ -74,18 +91,11 @@ export default {
 
         
         let datosLS = JSON.parse(localStorage.getItem('idrecetas')) || [];
-        // console.log(this.$store.state.listaFavStore);
         if (datosLS != null) {            
             this.$store.dispatch('llenarLista', datosLS);
         }
 
-        for (let i = 0; i < this.$store.state.listaFavStore.length; i++) {
-            let recetain = await this.getRecetabyId(this.$store.state.listaFavStore[i])
-            //aqui po-------------------------------------------------------------------------------------------------------------------
-            this.$store.dispatch('llenarRecetas', recetain);
-            console.log(this.$store.state.recetasFavStore);
-            //aqui po-------------------------------------------------------------------------------------------------------------------            
-        }
+        this.recorrelsrecetas()
         
         for (let i = 0; i < 4; i++) {
             let recetain = await this.getRandomReceta()
@@ -100,7 +110,37 @@ export default {
 
 <style scoped>
 
+.header{    
+    justify-content: center;    
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
 
+.header input{
+    border: solid #eee;
+    text-align: center;
+    width: 50%;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    font-size: 2em;
+    padding-left: 15px;
+}
+
+.header input:focus{
+    outline:none;
+}
+
+.header button{
+    border: none;
+    background: transparent;
+    font-size: 2em;
+    color: #fff;
+}
+
+.header button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
 
 </style>
 

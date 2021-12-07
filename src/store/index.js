@@ -15,7 +15,7 @@ export default new Vuex.Store({
     },
 
     aggReceta(state, id){
-      state.recetasFavStore.push(id)
+      state.recetasFavStore = id
     }
   },
 

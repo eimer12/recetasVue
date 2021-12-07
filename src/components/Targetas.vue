@@ -34,6 +34,16 @@ export default {
         };
     },
 
+    mounted(){
+        this.lista = this.listaFav
+    },
+
+    watch:{
+        lista:function(){
+            this.$emit('ListaFavorita', this.lista);
+        }
+    },
+
     props:{
         receta: Array,
     },
@@ -50,7 +60,8 @@ export default {
             }
             datosLS.push(recetaid)
             const todosJ = JSON.stringify(datosLS)
-            this.$store.dispatch('llenarLista', datosLS);            
+            this.lista = datosLS
+            this.$store.dispatch('llenarLista', datosLS);
             localStorage.setItem('idrecetas', todosJ)
 
         },

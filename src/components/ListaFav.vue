@@ -83,10 +83,12 @@
 
 .clos{
     font-size: 1.1em;
+    background: transparent;
+    border: none;
     color: #353ec7;
     position: absolute;
-    top: 1%;
-    left: 88%;
+    top: 2%;
+    left: 85%;
     cursor: pointer;
     opacity: 0;
 }

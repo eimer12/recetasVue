@@ -24,11 +24,11 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap'); */
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  overflow: hidden;
+
 }
 </style>
