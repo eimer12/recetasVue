@@ -1,8 +1,8 @@
 <template>
     <div>
         <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
-        <button @click="getBusquedaReceta(busqueda)">Buscar</button>
-        <listaFav :receta="recetafav"></listaFav>
+        <button @click="getBusquedaReceta(busqueda)">Buscar</button>        
+        <listaFav :receta="this.$store.state.recetasFavStore"></listaFav>
         <targetas :receta="receta" ></targetas>
     </div>
 </template>
@@ -11,6 +11,7 @@
 <script>
 import Targetas from './Targetas.vue'
 import ListaFav from './ListaFav.vue';
+import { mapState } from 'vuex'
 
 export default {
     components: { 
@@ -22,7 +23,7 @@ export default {
     data() {
         return {
             lista: this.$store.state.listaFavStore,
-            recetafav: [],
+            recetafav: this.$store.state.recetasFavStore,
             receta: [],
             busqueda: '',
         };
@@ -59,6 +60,8 @@ export default {
             return receta;
         },
 
+        ...mapState(['recetasFavStore']),
+
     },
 
     watch:{
@@ -78,7 +81,10 @@ export default {
 
         for (let i = 0; i < this.$store.state.listaFavStore.length; i++) {
             let recetain = await this.getRecetabyId(this.$store.state.listaFavStore[i])
-            this.recetafav.push(recetain)
+            //aqui po-------------------------------------------------------------------------------------------------------------------
+            this.$store.dispatch('llenarRecetas', recetain);
+            console.log(this.$store.state.recetasFavStore);
+            //aqui po-------------------------------------------------------------------------------------------------------------------            
         }
         
         for (let i = 0; i < 4; i++) {
