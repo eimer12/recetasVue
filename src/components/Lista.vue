@@ -71,14 +71,13 @@ export default {
 
         
         let datosLS = JSON.parse(localStorage.getItem('idrecetas')) || [];
-        this.$store.dispatch('llenarLista', datosLS);
         // console.log(this.$store.state.listaFavStore);
-        if (datosLS != null) {
-            this.lista = datosLS;
+        if (datosLS != null) {            
+            this.$store.dispatch('llenarLista', datosLS);
         }
 
-        for (let i = 0; i < this.lista.length; i++) {
-            let recetain = await this.getRecetabyId(this.lista[i])
+        for (let i = 0; i < this.$store.state.listaFavStore.length; i++) {
+            let recetain = await this.getRecetabyId(this.$store.state.listaFavStore[i])
             this.recetafav.push(recetain)
         }
         
