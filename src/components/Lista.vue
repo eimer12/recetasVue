@@ -49,7 +49,7 @@ export default {
     async created() {
         for (let i = 0; i < 4; i++) {
             let recetain = await this.getRandomReceta()
-            this.receta.push(recetain)
+            this.receta.push(recetain)            
         }        
     },
 

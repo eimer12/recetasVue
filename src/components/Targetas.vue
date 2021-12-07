@@ -2,8 +2,7 @@
     <div class="recetas">
 
         <div class="card-recetas" v-for="(item, index) of receta" :key="index" >
-            
-            <input type="text" v-model="$store.state.SaludoFav" >
+                        
             <div class="img-receta">
                 <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
             </div>
@@ -11,7 +10,7 @@
                 <h4>{{ receta[index].strMeal }} </h4>
                 <button 
                     class="fav-btn"
-                    @click="ActualizaLS()"
+                    @click="ActualizaLS(receta[index].idMeal)"
                     >
                     <i class="fas fa-heart"></i>
                 </button>
@@ -23,7 +22,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     name: 'Targetas',
@@ -41,25 +41,23 @@ export default {
     methods:{        
         ...mapMutations(['getLs']),
 
-        ActualizaLS (){
-            console.log();
-            // const idrecetas = $store.mutations.getLS();
-            // idrecetas.push(recetaid);
-            // const todosJ = JSON.stringify(idrecetas)
-            // localStorage.setItem('idrecetas', todosJ)
+        ActualizaLS (recetaid){
+                        
+            this.listaFav.push(recetaid)                        
+            const todosJ = JSON.stringify(this.listaFav)
+            localStorage.setItem('idrecetas', todosJ)
 
         },
 
-        // borrarLS (recetaid){
-        //     let LS = $store.mutations.getLS();
-        //     localStorage.setItem("idrecetas", JSON.stringify(LS.filter((id) => id !== recetaid)));
-        // },
+        borrarLS (recetaid){            
+            localStorage.setItem("idrecetas", JSON.stringify(this.listaFav.filter((id) => id !== recetaid)));
+        },
 
         
     },
 
     computed:{        
-        
+        ...mapState(['listaFav']),
     },
 
 }

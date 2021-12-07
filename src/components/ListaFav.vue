@@ -1,0 +1,116 @@
+<template>
+  <div class="favoritos">
+      <div class="favcont">
+        <ul id="ul-fav">
+          <li class="li-fav" v-if="listaFav.length > 0" >
+              <img src="" alt="">
+              <br><span>Nombre Receta</span>              
+              <button class="clos"><i class="far fa-times-circle"></i></button>
+          </li>
+        </ul>  
+      </div> 
+  </div>
+</template>
+
+<script>
+    import { mapState } from 'vuex'
+    export default {
+        name: 'ListaFav',
+
+        data() {
+            return {
+                lista: this.listaFav,
+            };
+        },
+
+        computed: {
+            ...mapState(['listaFav']),
+
+            
+        },
+
+        methods: {
+
+            async getRecetabyId(idreceta){
+                let resp = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i="+idreceta);
+                let respData = await resp.json();
+                let receta = respData.meals[0];
+                console.log('hello22');
+                return receta;
+            }
+        },
+
+        async mounted() {
+            console.log(this.listaFav);
+        }
+
+    }
+</script>
+
+<style scoped>
+.favoritos{
+    background-image: url("https://image.freepik.com/vector-gratis/patron-fisuras-comida-vegetariana_73378-545.jpg");
+    /* margin: auto; */
+    margin: 0px;
+    width: 100vw;
+    max-width: 100vw;
+    overflow: auto;
+    box-shadow: 
+    inset 0px 11px 8px -10px rgb(112, 112, 112),
+    inset 0px -11px 8px -10px rgb(112, 112, 112); 
+}
+
+.favcont{
+    background-color: #7face0ad;
+    min-width: 100vw;
+    width: max-content;
+    padding: 20px;
+    padding-top: 50px;
+    margin: 20px 0px;
+}
+
+.favoritos ul{    
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 0px;
+}
+
+.favoritos li{
+    position: relative;
+    background-color: #fff;
+    max-width: 200px;
+    box-shadow:  0px 10px 10px rgba(71, 71, 71, 0.5);
+    border-radius: 10px;
+    list-style: none;
+    margin: 0px 10px 0px 10px;
+    padding: 10px;    
+}
+
+.li-fav:hover{
+    transform: scale(1.05);
+}
+
+.favoritos li img{
+    width: 180px;
+    border-radius: 50%;
+}
+
+.li-fav:hover .clos{
+    opacity: 1;
+}
+
+.clos{
+    font-size: 1.1em;
+    color: #353ec7;
+    position: absolute;
+    top: 1%;
+    left: 88%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.clos:hover{
+    transform: scale(1.2);
+}
+</style>

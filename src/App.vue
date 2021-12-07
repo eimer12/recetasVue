@@ -1,12 +1,13 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+  <div id="app">    
+    <ListaFav></ListaFav>
     <Lista></Lista>
   </div>
 </template>
 
 <script>
 import Lista from './components/Lista.vue';
+import ListaFav from './components/ListaFav.vue';
 
 export default {
   name: 'App',
@@ -19,6 +20,7 @@ export default {
 
   components: {
     Lista,
+    ListaFav,
   }
 }
 </script>

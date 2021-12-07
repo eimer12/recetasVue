@@ -5,11 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    listaFav:Array
+    listaFav:[]
   },
 
   mutations: {
     getLS (state){
+      console.log('hello');
       state.listaFav = JSON.parse(localStorage.getItem('idrecetas')) || [];
     },
     
@@ -19,5 +20,6 @@ export default new Vuex.Store({
   },
 
   modules: {
-  }
+  },
+
 })
