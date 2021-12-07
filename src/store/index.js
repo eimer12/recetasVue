@@ -5,18 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    listaFav:[]
+    listaFavStore:[]
   },
 
   mutations: {
-    getLS (state){
-      console.log('hello');
-      state.listaFav = JSON.parse(localStorage.getItem('idrecetas')) || [];
-    },
+    aggLista(state, id){
+      state.listaFavStore = id
+    }    
     
   },
 
   actions: {
+    llenarLista(contex, id){
+      contex.commit('aggLista', id)
+    }
   },
 
   modules: {

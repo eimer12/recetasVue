@@ -43,8 +43,14 @@ export default {
 
         ActualizaLS (recetaid){
                         
-            this.listaFav.push(recetaid)                        
-            const todosJ = JSON.stringify(this.listaFav)
+            // this.listaFav.push(recetaid)
+            let datosLS = JSON.parse(localStorage.getItem('idrecetas')  );
+            if (datosLS === null) {
+                datosLS = []
+            }
+            datosLS.push(recetaid)
+            const todosJ = JSON.stringify(datosLS)
+            this.$store.dispatch('llenarLista', datosLS);            
             localStorage.setItem('idrecetas', todosJ)
 
         },

@@ -1,7 +1,8 @@
 <template>
     <div>
         <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
-        <button @click="getBusquedaReceta(busqueda)">Buscar</button>        
+        <button @click="getBusquedaReceta(busqueda)">Buscar</button>
+        <listaFav :receta="recetafav"></listaFav>
         <targetas :receta="receta" ></targetas>
     </div>
 </template>
@@ -9,13 +10,19 @@
 
 <script>
 import Targetas from './Targetas.vue'
+import ListaFav from './ListaFav.vue';
 
 export default {
-    components: { Targetas },
+    components: { 
+        Targetas,
+        ListaFav,
+    },
     name: 'Lista',
 
     data() {
         return {
+            lista: this.$store.state.listaFavStore,
+            recetafav: [],
             receta: [],
             busqueda: '',
         };
@@ -43,16 +50,52 @@ export default {
             }else{
                 alert("No se encuentran resultados de "+busqueda)
             }
+        },
+
+        async getRecetabyId(idreceta){
+            let resp = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i="+idreceta);
+            let respData = await resp.json();
+            let receta = respData.meals[0];
+            return receta;
+        },
+
+    },
+
+    watch:{
+        lista:function(){
+            alert('hello')
         }
     },
 
     async created() {
+
+        
+        let datosLS = JSON.parse(localStorage.getItem('idrecetas')) || [];
+        this.$store.dispatch('llenarLista', datosLS);
+        // console.log(this.$store.state.listaFavStore);
+        if (datosLS != null) {
+            this.lista = datosLS;
+        }
+
+        for (let i = 0; i < this.lista.length; i++) {
+            let recetain = await this.getRecetabyId(this.lista[i])
+            this.recetafav.push(recetain)
+        }
+        
         for (let i = 0; i < 4; i++) {
             let recetain = await this.getRandomReceta()
             this.receta.push(recetain)            
-        }        
+        }
+
+        
     },
 
 }
 </script>
+
+<style scoped>
+
+
+
+</style>
 

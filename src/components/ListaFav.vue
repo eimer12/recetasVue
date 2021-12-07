@@ -1,10 +1,10 @@
 <template>
   <div class="favoritos">
       <div class="favcont">
-        <ul id="ul-fav">
-          <li class="li-fav" v-if="listaFav.length > 0" >
-              <img src="" alt="">
-              <br><span>Nombre Receta</span>              
+        <ul id="ul-fav"  v-if="receta.length > 0">
+          <li class="li-fav" v-for="(item, index) of receta " :key="index">
+              <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
+              <br><span>{{ receta[index].strMeal }}</span>              
               <button class="clos"><i class="far fa-times-circle"></i></button>
           </li>
         </ul>  
@@ -13,44 +13,25 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
     export default {
         name: 'ListaFav',
 
         data() {
             return {
-                lista: this.listaFav,
+                lista: [],
             };
         },
 
-        computed: {
-            ...mapState(['listaFav']),
-
-            
-        },
-
-        methods: {
-
-            async getRecetabyId(idreceta){
-                let resp = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i="+idreceta);
-                let respData = await resp.json();
-                let receta = respData.meals[0];
-                console.log('hello22');
-                return receta;
-            }
-        },
-
-        async mounted() {
-            console.log(this.listaFav);
+        props:{
+            receta: Array
         }
-
     }
 </script>
 
 <style scoped>
+
 .favoritos{
     background-image: url("https://image.freepik.com/vector-gratis/patron-fisuras-comida-vegetariana_73378-545.jpg");
-    /* margin: auto; */
     margin: 0px;
     width: 100vw;
     max-width: 100vw;
@@ -113,4 +94,5 @@
 .clos:hover{
     transform: scale(1.2);
 }
+
 </style>
