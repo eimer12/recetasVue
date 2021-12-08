@@ -80,10 +80,9 @@ export default {
 
 .recetas{
     display: flex;
-    width: 100%;
-    margin: auto;
-    margin-left: 0px;
-    margin-right: 0px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 20px;
     flex-wrap: wrap;
     border-radius: 4em;

@@ -58,8 +58,7 @@
     background-color: #7face0ad;
     min-width: 100vw;
     width: max-content;
-    padding: 20px;
-    padding-top: 50px;
+    padding: 20px;    
     margin: 20px 0px;
 }
 
