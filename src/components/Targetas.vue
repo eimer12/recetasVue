@@ -40,8 +40,7 @@ export default {
 
     watch:{
         lista:function(){
-            this.$emit('ListaFavorita', this.lista);
-            console.log('Tar' + this.lista);
+            this.$emit('ListaFavorita', this.lista);            
         }
     },
 

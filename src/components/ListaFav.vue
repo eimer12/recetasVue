@@ -24,8 +24,7 @@
 
         watch:{
             lista:function(){
-                this.$emit('ListaFavorita', this.lista);
-                console.log('Fav' + this.lista);
+                this.$emit('ListaFavorita', this.lista);                
             },
         },
 

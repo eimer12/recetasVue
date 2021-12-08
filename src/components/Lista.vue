@@ -80,8 +80,7 @@ export default {
 
     watch:{
         listafavo:function(){
-            if (this.listafavo !== undefined ) {
-                console.log(this.listafavo);
+            if (this.listafavo !== undefined ) {                
                 this.recorrelsrecetas()
             }
         }
