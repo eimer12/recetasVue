@@ -1,19 +1,22 @@
 <template>
     <div class="recetas">
-
-        <div class="card-recetas" v-for="(item, index) of receta" :key="index" >
+        
+        <div class="cardrecetas" v-for="(item, index) of receta" :key="index" >
                         
             <div class="img-receta">
                 <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
             </div>
             <div class="pie-receta">
                 <h4>{{ receta[index].strMeal }} </h4>
-                <button 
-                    class="fav-btn"
-                    @click="ActualizaLS(receta[index].idMeal)"
+                <button
+                    class="button"
+                    
+                    :class="[receta[index].fav ? 'active' : '']" role="alert"
+
+                    @click="ActualizaLS(receta[index].idMeal), receta[index].fav=!receta[index].fav"
                     >
                     <i class="fas fa-heart"></i>
-                </button>
+                </button>                
             </div>
         
         </div>
@@ -30,7 +33,8 @@ export default {
     
     data() {
         return {
-            lista: []
+            lista: [],
+            activee: true,
         };
     },
 
@@ -52,17 +56,21 @@ export default {
         ...mapMutations(['getLs']),
 
         ActualizaLS (recetaid){
-                        
-            // this.listaFav.push(recetaid)
+                                    
             let datosLS = JSON.parse(localStorage.getItem('idrecetas')  );
             if (datosLS === null) {
                 datosLS = []
             }
-            datosLS.push(recetaid)
-            const todosJ = JSON.stringify(datosLS)
-            this.lista = datosLS
-            this.$store.dispatch('llenarLista', datosLS);
-            localStorage.setItem('idrecetas', todosJ)
+            if (!datosLS.includes(''+recetaid)) {                
+                datosLS.push(recetaid)
+                const todosJ = JSON.stringify(datosLS)
+                this.lista = datosLS
+                this.$store.dispatch('llenarLista', datosLS);
+                localStorage.setItem('idrecetas', todosJ)
+            }else{
+                this.$store.dispatch('ACborradoLS', recetaid);
+                this.lista = this.$store.state.listaFavStore.filter((id) => id !== recetaid)
+            }
 
         },        
 
@@ -89,7 +97,7 @@ export default {
     justify-content: center;
 }
 
-.card-recetas{
+.cardrecetas{
     height: 350px;
     width: 300px;
     background-color: #fff;
@@ -98,12 +106,12 @@ export default {
     box-shadow:  0px 10px 10px rgba(71, 71, 71, 0.5);
 }
 
-.card-recetas:hover{
+.cardrecetas:hover{
     transform: scale(1.02);
     cursor: pointer;
 }
 
-.card-recetas img{
+.cardrecetas img{
     height: 250px;
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
@@ -123,7 +131,7 @@ export default {
     margin: 0;
 }
 
-.pie-receta button{
+.button{
     border: none;
     background: transparent;
     font-size: 2em;
@@ -131,7 +139,7 @@ export default {
     cursor: pointer;
 }
 
-.fav-btn.active{
+.active{
     color: rgb(218, 0, 0);
 }
 </style>

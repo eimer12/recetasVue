@@ -34,13 +34,14 @@ export default {
     methods:{       
         
         pruebas(){
-            console.log(this.listafavo);
+            
         },
 
         async getRandomReceta(){
-                let resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+            let resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
                 let respData = await resp.json();
-                let randomReceta = respData.meals[0];                
+                let randomReceta = respData.meals[0];
+                randomReceta['fav']=false
                 return randomReceta
         },
 

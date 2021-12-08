@@ -35,7 +35,7 @@
         methods:{
             borrarIDLS(IDreceta){
                 this.$store.dispatch('ACborradoLS', IDreceta);
-                this.lista = this.$store.state.listaFavStore.filter((id) => id !== IDreceta)                
+                this.lista = this.$store.state.listaFavStore.filter((id) => id !== IDreceta)
             }
         }
     }
