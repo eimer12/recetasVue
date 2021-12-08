@@ -16,7 +16,12 @@ export default new Vuex.Store({
 
     aggReceta(state, id){
       state.recetasFavStore = id
-    }
+    },
+
+    borrarLS (state, recetaid){
+      localStorage.setItem("idrecetas", JSON.stringify(state.listaFavStore.filter((id) => id !== recetaid)));
+      state.listaFavStore = state.listaFavStore.filter((id) => id !== recetaid)
+    },
   },
 
   actions: {
@@ -27,6 +32,10 @@ export default new Vuex.Store({
     llenarRecetas(contex, id){
       contex.commit('aggReceta', id)
     },
+
+    ACborradoLS (contex, recetaid){
+      contex.commit('borrarLS', recetaid)
+    }
   },
 
   modules: {

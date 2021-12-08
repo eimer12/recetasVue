@@ -5,7 +5,7 @@
             <button @click="getBusquedaReceta(busqueda)"><i class="fas fa-search" /></button>
         </div>
         <!-- <button @click="pruebas" >jeje</button> -->
-        <listaFav :receta="this.$store.state.recetasFavStore"></listaFav>
+        <listaFav :receta="this.$store.state.recetasFavStore" @ListaFavorita="listafavo=$event"></listaFav>
         <targetas :receta="receta" @ListaFavorita="listafavo=$event" ></targetas>        
     </div>
 </template>
@@ -81,7 +81,7 @@ export default {
     watch:{
         listafavo:function(){
             if (this.listafavo !== undefined ) {
-                console.log(this.$store.state.recetasFavStore);
+                console.log(this.listafavo);
                 this.recorrelsrecetas()
             }
         }

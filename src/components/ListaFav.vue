@@ -5,7 +5,7 @@
           <li class="li-fav" v-for="(item, index) of receta " :key="index">
               <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
               <br><span>{{ receta[index].strMeal }}</span>              
-              <button class="clos"><i class="far fa-times-circle"></i></button>
+              <button class="clos" @click="borrarIDLS(receta[index].idMeal)"><i class="far fa-times-circle"></i></button>
           </li>
         </ul>  
       </div> 
@@ -22,8 +22,22 @@
             };
         },
 
+        watch:{
+            lista:function(){
+                this.$emit('ListaFavorita', this.lista);
+                console.log('Fav' + this.lista);
+            },
+        },
+
         props:{
             receta: Array
+        },
+
+        methods:{
+            borrarIDLS(IDreceta){
+                this.$store.dispatch('ACborradoLS', IDreceta);
+                this.lista = this.$store.state.listaFavStore.filter((id) => id !== IDreceta)                
+            }
         }
     }
 </script>

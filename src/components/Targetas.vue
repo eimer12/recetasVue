@@ -41,6 +41,7 @@ export default {
     watch:{
         lista:function(){
             this.$emit('ListaFavorita', this.lista);
+            console.log('Tar' + this.lista);
         }
     },
 
@@ -64,11 +65,7 @@ export default {
             this.$store.dispatch('llenarLista', datosLS);
             localStorage.setItem('idrecetas', todosJ)
 
-        },
-
-        borrarLS (recetaid){            
-            localStorage.setItem("idrecetas", JSON.stringify(this.listaFav.filter((id) => id !== recetaid)));
-        },
+        },        
 
         
     },
