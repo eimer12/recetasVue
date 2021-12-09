@@ -41,7 +41,11 @@ export default {
             let resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
                 let respData = await resp.json();
                 let randomReceta = respData.meals[0];
-                randomReceta['fav']=false
+                if (this.$store.state.listaFavStore.includes(''+randomReceta.idMeal)) {
+                    randomReceta['fav']=true
+                }else{
+                    randomReceta['fav']=false
+                }
                 return randomReceta
         },
 
@@ -52,9 +56,14 @@ export default {
 
             if (receta) {
                 this.receta=[]                 
-                receta.forEach((receta) => {   
+                receta.forEach((receta) => {
+                    if (this.$store.state.listaFavStore.includes(''+receta.idMeal)) {
+                        receta['fav']=true
+                    }else{
+                        receta['fav']=false
+                    }
                     this.receta.push(receta)
-                });        
+                });
             }else{
                 alert("No se encuentran resultados de "+busqueda)
             }

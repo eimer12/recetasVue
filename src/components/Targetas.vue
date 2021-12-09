@@ -2,23 +2,21 @@
     <div class="recetas">
         
         <div class="cardrecetas" v-for="(item, index) of receta" :key="index" >
-                        
+            <!-- <button @click="pruebas" >asdf</button> -->
             <div class="img-receta">
                 <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
             </div>
             <div class="pie-receta">
                 <h4>{{ receta[index].strMeal }} </h4>
                 <button
-                    class="button"
-                    
+                    class="button"                    
                     :class="[receta[index].fav ? 'active' : '']" role="alert"
 
                     @click="ActualizaLS(receta[index].idMeal), receta[index].fav=!receta[index].fav"
                     >
                     <i class="fas fa-heart"></i>
                 </button>                
-            </div>
-        
+            </div>        
         </div>
 
     </div>
@@ -36,11 +34,7 @@ export default {
             lista: [],
             activee: true,
         };
-    },
-
-    mounted(){
-        this.lista = this.listaFav
-    },
+    },    
 
     watch:{
         lista:function(){
@@ -54,6 +48,10 @@ export default {
 
     methods:{        
         ...mapMutations(['getLs']),
+
+        pruebas(){
+            console.log(this.receta);
+        },
 
         ActualizaLS (recetaid){
                                     
