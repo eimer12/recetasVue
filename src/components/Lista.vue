@@ -1,12 +1,33 @@
+
+
 <template>
     <div>
         <div class="header">
             <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
             <button @click="getBusquedaReceta(busqueda)"><i class="fas fa-search" /></button>
         </div>
-        <!-- <button @click="pruebas" >jeje</button> -->
         <listaFav :receta="this.$store.state.recetasFavStore" @ListaFavorita="listafavo=$event"></listaFav>
-        <targetas :receta="receta" @ListaFavorita="listafavo=$event" ></targetas>        
+        <targetas 
+            :receta="receta" 
+            @ListaFavorita="listafavo=$event" 
+            @recetaIn="recetaIn=$event" 
+            @instrucciones="instrucciones=$event">
+        </targetas>
+        <!-- <button @click="pruebas" >PRUEBAS</button> -->
+        
+        <div class="container" v-if="instrucciones">
+            <button class="clos" @click="instruc()" ><i class="far fa-times-circle"></i></button>
+            <div class="instrucciones" @click="pruebas" >
+                <iframe class="video" :src="recetaIn.strYoutube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h1>{{ recetaIn.strMeal }}</h1>
+                <p>{{ recetaIn.strInstructions }}</p>
+                <h2>aqui algunos ingredientes</h2>
+                <h2>aqui algunos ingredientes</h2>
+                <h2>aqui algunos ingredientes</h2>
+                <h2>aqui algunos ingredientes</h2>
+                <h2>aqui algunos ingredientes</h2>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,13 +49,19 @@ export default {
             listafavo: Array,
             receta: [],
             busqueda: '',
+            recetaIn: [],
+            instrucciones: false
         };
     },
 
     methods:{       
         
         pruebas(){
-            
+            console.log(this.recetaIn.strYoutube);
+        },
+        
+        instruc(){
+            this.instrucciones = false
         },
 
         async getRandomReceta(){
@@ -93,7 +120,7 @@ export default {
             if (this.listafavo !== undefined ) {                
                 this.recorrelsrecetas()
             }
-        }
+        },
     },
 
     async created() {
@@ -149,6 +176,44 @@ export default {
 .header button:hover{
     cursor: pointer;
     transform: scale(1.1);
+}
+
+.container{
+    background: rgba(0, 0, 0, 0.4);    
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.instrucciones{
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px 1px;    
+    width: 50%;
+    height: 90%;
+    position: relative;
+    padding: 1.2em;
+    overflow: auto;
+}
+
+.clos{
+    color: #fff;
+    position: absolute;
+    right: 2%;
+    top: 1%;
+    background: transparent;
+    border: none;
+    font-size: 2.5em;
+}
+
+.video{
+    width: 100%;
+    height: 400px;
 }
 
 </style>

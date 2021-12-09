@@ -1,24 +1,26 @@
 <template>
     <div class="recetas">
         
-        <div class="cardrecetas" v-for="(item, index) of receta" :key="index" >
+        <div class="cardrecetas" 
+            v-for="(item, index) of receta" 
+            :key="index" 
+                >
             <!-- <button @click="pruebas" >asdf</button> -->
-            <div class="img-receta">
+            <div class="img-receta" @click="devolverReceta(index)">
                 <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
             </div>
             <div class="pie-receta">
-                <h4>{{ receta[index].strMeal }} </h4>
+                <h4 @click="devolverReceta(index)">{{ receta[index].strMeal }} </h4>
                 <button
-                    class="button"                    
+                    class="button"
                     :class="[receta[index].fav ? 'active' : '']" role="alert"
 
                     @click="ActualizaLS(receta[index].idMeal), receta[index].fav=!receta[index].fav"
                     >
                     <i class="fas fa-heart"></i>
-                </button>                
-            </div>        
+                </button>
+            </div>
         </div>
-
     </div>
 </template>
 
@@ -38,7 +40,7 @@ export default {
 
     watch:{
         lista:function(){
-            this.$emit('ListaFavorita', this.lista);            
+            this.$emit('ListaFavorita', this.lista);
         }
     },
 
@@ -48,6 +50,12 @@ export default {
 
     methods:{        
         ...mapMutations(['getLs']),
+
+        devolverReceta(index){
+            this.$emit('recetaIn', this.receta[index]);
+            this.$emit('instrucciones', true);
+            
+        },
 
         pruebas(){
             console.log(this.receta);
@@ -106,7 +114,6 @@ export default {
 
 .cardrecetas:hover{
     transform: scale(1.02);
-    cursor: pointer;
 }
 
 .cardrecetas img{
@@ -114,6 +121,7 @@ export default {
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
     width: 100%;    
+    cursor: pointer;
 }
 
 .pie-receta{
@@ -127,6 +135,7 @@ export default {
     overflow: hidden;
     align-self: center;
     margin: 0;
+    cursor: pointer;
 }
 
 .button{
