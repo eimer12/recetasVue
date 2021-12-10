@@ -23,7 +23,6 @@
                     <ul>
                         <div class="ingredients" v-for="(item, ind) of arra" :key="ind">
                             <div >
-                            <button @click="pruebas(recetaIn.strIngredient+ind)" >PRUEBAS</button> 
                                 <li>hola</li>
                             </div>
                         </div>
@@ -59,7 +58,7 @@ export default {
             busqueda: '',
             recetaIn: [],
             instrucciones: false,
-            arra: [2,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            arra: []
         };
     },
 
@@ -121,6 +120,24 @@ export default {
                 this.$store.dispatch('llenarRecetas', ListaMeals);
         },
 
+        verifica(){
+            console.log(this.recetaIn);
+            let ingreN,nul,vacio
+            for (let i = 1; i <= 20; i++) {
+                ingreN = 'strIngredient'+(i)
+                nul = `${this.recetaIn[ingreN] !== null}`
+                console.log(nul);
+                if (nul) {
+                    console.log('---nul----'+`${this.recetaIn[ingreN]}`+'---'+ingreN);
+                    vacio = `${this.recetaIn[ingreN].length > 1}`
+                    if (vacio) {
+                        console.log('-------'+`${this.recetaIn[ingreN]}`+'---'+ingreN);
+                        // console.log(vacio);
+                    }                
+                }
+            }
+        },
+
         ...mapState(['recetasFavStore']),
 
     },
@@ -131,6 +148,9 @@ export default {
                 this.recorrelsrecetas()
             }
         },
+        instrucciones:function(){
+            this.verifica()
+        }
     },
 
     async created() {
