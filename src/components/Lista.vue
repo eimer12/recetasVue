@@ -1,5 +1,3 @@
-
-
 <template>
     <div>
         <div class="header">
@@ -17,15 +15,22 @@
         
         <div class="container" v-if="instrucciones">
             <button class="clos" @click="instruc()" ><i class="far fa-times-circle"></i></button>
-            <div class="instrucciones" @click="pruebas" >
-                <iframe class="video" :src="recetaIn.strYoutube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <h1>{{ recetaIn.strMeal }}</h1>
-                <p>{{ recetaIn.strInstructions }}</p>
-                <h2>aqui algunos ingredientes</h2>
-                <h2>aqui algunos ingredientes</h2>
-                <h2>aqui algunos ingredientes</h2>
-                <h2>aqui algunos ingredientes</h2>
-                <h2>aqui algunos ingredientes</h2>
+            <div class="instrucciones">
+                <img class="img" :src="recetaIn.strMealThumb" alt="recetaIn.strMeal">
+                <div class="contenido">
+                    <h1>{{ recetaIn.strMeal }}</h1>
+                    <h3>Instructions</h3>
+                    <ul>
+                        <div class="ingredients" v-for="(item, ind) of arra" :key="ind">
+                            <div >
+                            <button @click="pruebas(recetaIn.strIngredient+ind)" >PRUEBAS</button> 
+                                <li>hola</li>
+                            </div>
+                        </div>
+                    </ul>
+                    <p>{{ recetaIn.strInstructions }}</p>
+                    <lazyYoutube :src="recetaIn.strYoutube"></lazyYoutube>
+                </div>
             </div>
         </div>
     </div>
@@ -35,14 +40,17 @@
 <script>
 import Targetas from './Targetas.vue'
 import ListaFav from './ListaFav.vue';
+import  {  LazyYoutube  }  from  "vue-lazytube" ;
 import { mapState } from 'vuex'
 
 export default {
+    name: 'Lista',
+
     components: { 
         Targetas,
         ListaFav,
+        LazyYoutube,
     },
-    name: 'Lista',
 
     data() {
         return {            
@@ -50,14 +58,16 @@ export default {
             receta: [],
             busqueda: '',
             recetaIn: [],
-            instrucciones: false
+            instrucciones: false,
+            arra: [2,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         };
     },
 
     methods:{       
         
-        pruebas(){
-            console.log(this.recetaIn.strYoutube);
+        pruebas(item){
+            console.log('hola');
+            console.log(item);
         },
         
         instruc(){
@@ -188,6 +198,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+
 }
 
 .instrucciones{
@@ -197,7 +208,6 @@ export default {
     width: 50%;
     height: 90%;
     position: relative;
-    padding: 1.2em;
     overflow: auto;
 }
 
@@ -211,9 +221,24 @@ export default {
     font-size: 2.5em;
 }
 
-.video{
+.img{
     width: 100%;
     height: 400px;
+    object-fit: cover;
+}
+
+
+.contenido{
+    padding: 1.5em;
+    padding-top: 0;
+}
+
+h1{
+    margin: 0;
+}
+
+p{
+    text-align: justify;
 }
 
 </style>

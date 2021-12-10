@@ -117,10 +117,10 @@ export default {
 }
 
 .cardrecetas img{
+    width: 100%;    
     height: 250px;
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
-    width: 100%;    
     cursor: pointer;
 }
 

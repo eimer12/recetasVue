@@ -3,6 +3,7 @@
 ## Project setup
 ```
 npm install
+npm install --save vue-lazytube
 ```
 
 ### Compiles and hot-reloads for development
