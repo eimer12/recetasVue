@@ -4,7 +4,13 @@
             <input type="text" v-model="busqueda" @keydown.enter="getBusquedaReceta(busqueda)" >
             <button @click="getBusquedaReceta(busqueda)"><i class="fas fa-search" /></button>
         </div>
-        <listaFav :receta="this.$store.state.recetasFavStore" @ListaFavorita="listafavo=$event"></listaFav>
+        <listaFav 
+            :receta="this.$store.state.recetasFavStore" 
+            @ListaFavorita="listafavo=$event"
+            @recetaIn="recetaIn=$event" 
+            @instrucciones="instrucciones=$event">
+            >
+        </listaFav>
         <targetas 
             :receta="receta" 
             @ListaFavorita="listafavo=$event" 
@@ -19,12 +25,12 @@
                 <img class="img" :src="recetaIn.strMealThumb" alt="recetaIn.strMeal">
                 <div class="contenido">
                     <h1>{{ recetaIn.strMeal }}</h1>
-                    <h3>Instructions</h3>
-                    <ul>
-                        <div class="ingredients" v-for="(item, ind) of arra" :key="ind">
-                            <div >
-                                <li>hola</li>
-                            </div>
+                    <ul class="lista">
+                    <h3>Ingredients</h3>
+                        <div class="ingredients" v-for="(item, ind) of ingCanti" :key="ind">
+                            <li>
+                                {{ item }}
+                            </li>
                         </div>
                     </ul>
                     <p>{{ recetaIn.strInstructions }}</p>
@@ -58,7 +64,7 @@ export default {
             busqueda: '',
             recetaIn: [],
             instrucciones: false,
-            arra: []
+            ingCanti: []
         };
     },
 
@@ -121,19 +127,14 @@ export default {
         },
 
         verifica(){
-            console.log(this.recetaIn);
-            let ingreN,nul,vacio
+            this.ingCanti=[]
             for (let i = 1; i <= 20; i++) {
-                ingreN = 'strIngredient'+(i)
-                nul = `${this.recetaIn[ingreN] !== null}`
-                console.log(nul);
-                if (nul) {
-                    console.log('---nul----'+`${this.recetaIn[ingreN]}`+'---'+ingreN);
-                    vacio = `${this.recetaIn[ingreN].length > 1}`
-                    if (vacio) {
-                        console.log('-------'+`${this.recetaIn[ingreN]}`+'---'+ingreN);
-                        // console.log(vacio);
-                    }                
+                if (this.recetaIn['strIngredient'+i]) {
+                    if (this.recetaIn['strMeasure'+i] != ' ') {
+                        this.ingCanti.push( this.recetaIn['strIngredient'+i]+' - '+this.recetaIn['strMeasure'+i])
+                    }else{
+                        this.ingCanti.push( this.recetaIn['strIngredient'+i])
+                    }
                 }
             }
         },
@@ -149,7 +150,9 @@ export default {
             }
         },
         instrucciones:function(){
-            this.verifica()
+            if (this.instrucciones) {
+                this.verifica()
+            }
         }
     },
 
@@ -177,7 +180,8 @@ export default {
 <style scoped>
 
 .header{    
-    justify-content: center;    
+    justify-content: center;
+    align-content: center;
     margin-top: 20px;
     margin-bottom: 0px;
 }
@@ -259,6 +263,24 @@ h1{
 
 p{
     text-align: justify;
+}
+
+.lista{
+    text-align: left;
+}
+.lista li{
+    list-style-type: decimal;
+}
+
+@media screen and (max-width: 768px)  {
+    .header input{
+        width: 80%;
+        font-size: 1.5em;
+    }
+    .instrucciones{
+        width: 95%;
+        margin-top: 50px;
+    }
 }
 
 </style>

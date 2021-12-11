@@ -3,8 +3,8 @@
       <div class="favcont">
         <ul id="ul-fav"  v-if="receta.length > 0">
           <li class="li-fav" v-for="(item, index) of receta " :key="index">
-              <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal">
-              <br><span>{{ receta[index].strMeal }}</span>              
+              <img :src="receta[index].strMealThumb" :alt="receta[index].strMeal" @click="devolverReceta(index)">
+              <br><span @click="devolverReceta(index)">{{ receta[index].strMeal }}</span>              
               <button class="clos" @click="borrarIDLS(receta[index].idMeal), receta[index].fav=!receta[index].fav"><i class="far fa-times-circle"></i></button>
           </li>
         </ul>  
@@ -36,7 +36,12 @@
             borrarIDLS(IDreceta){
                 this.$store.dispatch('ACborradoLS', IDreceta);
                 this.lista = this.$store.state.listaFavStore.filter((id) => id !== IDreceta)
-            }
+            },
+
+            devolverReceta(index){
+                this.$emit('recetaIn', this.receta[index]);
+                this.$emit('instrucciones', true);
+            },
         }
     }
 </script>
