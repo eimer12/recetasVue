@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import LazyYoutube from 'vue-lazytube'
+import LazyTube from "vue-lazytube";
+
+Vue.use(LazyTube);
 
 Vue.use(LazyYoutube);
 
